@@ -1,27 +1,28 @@
 import React from 'react';
-import { StyleSheet, Text, View, AsyncStorage } from 'react-native';
-import { getDecks, saveDeckTitle, addCardToDeck, CARDS_STORAGE_KEY } from './utils/helper';
+import { StyleSheet, Text, View } from 'react-native';
+import { getDecks, saveDeckTitle, addCardToDeck } from './utils/helper';
 
 export default class App extends React.Component {
   state = { decks: null }
-  
-  componentDidMount(){
-    AsyncStorage.removeItem(CARDS_STORAGE_KEY)
-    
-    saveDeckTitle('Teja')
-    
-    addCardToDeck('Teja', { questions: 'q', answers: 'a' })
-    
-    getDecks().then((decks) => this.setState({decks}))    
+
+  componentDidMount() {
+
+    saveDeckTitle('Deck1')
+    addCardToDeck('Deck1', { questions: 'q', answers: 'a' }, () => 
+    this.getDecksToDisplay())
+  }
+
+  getDecksToDisplay() {
+    getDecks().then((decks) => this.setState({ decks }));
   }
 
   render() {
-    const {decks} = this.state
+    const { decks } = this.state
 
     return (
       <View style={styles.container}>
         <Text>
-          {'hi'+decks}
+          {decks}
         </Text>
       </View>
     );

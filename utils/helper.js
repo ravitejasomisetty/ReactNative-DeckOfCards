@@ -23,10 +23,10 @@ export function saveDeckTitle(title) {
     }))
 }
 
-export function addCardToDeck(title, card) {
+export function addCardToDeck(title, card, cb) {
     return getDecks().then((decks) => {
         const decksJson = JSON.parse(decks)
         decksJson[title].questions.push(card)
-        AsyncStorage.setItem(CARDS_STORAGE_KEY, JSON.stringify(decksJson))
+        AsyncStorage.setItem(CARDS_STORAGE_KEY, JSON.stringify(decksJson), cb)
     })
 }
