@@ -3,30 +3,30 @@ import { AsyncStorage } from 'react-native'
 export const CARDS_STORAGE_KEY = 'FlashCards.Storage.Key'
 
 
-export function getDecks() {
-    return AsyncStorage.getItem(CARDS_STORAGE_KEY)
+export function getDecks(callback) {
+    return AsyncStorage.getItem(CARDS_STORAGE_KEY, callback)
 }
 
 export function getDeck(id) {
-    return getDecks().then((decks) => {
+    return getDecks((err, decks) => {
         const decksJson = JSON.parse(decks)
         return decksJson[id]
     })
 }
 
-export function saveDeckTitle(title) {
+export function saveDeckTitle(title, callback) {
     return AsyncStorage.mergeItem(CARDS_STORAGE_KEY, JSON.stringify({
         [title]: {
             title: title,
             questions: []
         }
-    }))
+    }), callback)
 }
 
-export function addCardToDeck(title, card, cb) {
-    return getDecks().then((decks) => {
+export function addCardToDeck(title, card, callback) {
+    return getDecks((decks) => {
         const decksJson = JSON.parse(decks)
         decksJson[title].questions.push(card)
-        AsyncStorage.setItem(CARDS_STORAGE_KEY, JSON.stringify(decksJson), cb)
+        AsyncStorage.setItem(CARDS_STORAGE_KEY, JSON.stringify(decksJson), callback)
     })
 }

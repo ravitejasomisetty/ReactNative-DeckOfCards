@@ -1,30 +1,21 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { getDecks, saveDeckTitle, addCardToDeck } from './utils/helper';
+import { Provider } from 'react-redux'
+import { createStore } from 'redux'
+import reducer from './reducers'
+import Decks from './components/Decks';
+import middleware from './middleware'
 
 export default class App extends React.Component {
-  state = { decks: null }
-
-  componentDidMount() {
-
-    saveDeckTitle('Deck1')
-    addCardToDeck('Deck1', { questions: 'q', answers: 'a' }, () => 
-    this.getDecksToDisplay())
-  }
-
-  getDecksToDisplay() {
-    getDecks().then((decks) => this.setState({ decks }));
-  }
 
   render() {
-    const { decks } = this.state
 
     return (
-      <View style={styles.container}>
-        <Text>
-          {decks}
-        </Text>
-      </View>
+      <Provider store={createStore(reducer, middleware)}>
+        <View style={styles.container}>
+          <Decks />
+        </View>
+      </Provider>
     );
   }
 }
