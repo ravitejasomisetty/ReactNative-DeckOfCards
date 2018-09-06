@@ -2,6 +2,7 @@ import { AsyncStorage } from 'react-native'
 
 export const CARDS_STORAGE_KEY = 'FlashCards.Storage.Key'
 
+AsyncStorage.removeItem(CARDS_STORAGE_KEY)
 
 export function getDecks(callback) {
     return AsyncStorage.getItem(CARDS_STORAGE_KEY, callback)

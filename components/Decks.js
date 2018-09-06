@@ -1,23 +1,41 @@
 import React, { Component } from 'react'
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
+import { ScrollView, View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import { connect } from 'react-redux';
 import { handleInitialData, handleAddDeck } from '../actions';
+import { white, lightPurp, gray, orange } from '../utils/colors';
 
 class Decks extends Component {
+    
     componentDidMount() {
         this.props.loadDummyDeck('DummyDeck')
     }
 
-    addDeck = () => {
-        this.props.loadDummyDeck('DummyDeck1')
-    }
-
     render() {
         const { decks } = this.props
-        return (<View>
-            <Text>{JSON.stringify(decks)}</Text>
-            <TouchableOpacity style={styles.iosSubmitBtn} onPress={this.addDeck}>Add</TouchableOpacity>
-        </View>)
+
+        if (typeof decks === 'undefined')
+            return <Text>No decks found</Text>
+
+        return (
+
+            <View style={styles.container}>
+                <ScrollView style={styles.decksList}>
+                    {Object.values(decks).map(deck =>
+                        <TouchableOpacity key={deck.title} style={styles.deckItem}>
+                            <Text style={styles.deckTitle}>{deck.title}</Text>
+                        </TouchableOpacity>)}
+                </ScrollView>
+                <View
+                    style={{
+                        borderBottomColor: 'black',
+                        borderBottomWidth: 1,
+                    }}
+                />
+                <TouchableOpacity style={styles.addDeck}>
+                    <Text style={styles.addDeckText}>Add Deck</Text>
+                </TouchableOpacity>
+            </View>
+        )
     }
 }
 
@@ -29,13 +47,35 @@ function mapDispatchToProps(dispatch) {
 }
 
 const styles = StyleSheet.create({
-    iosSubmitBtn: {
-        backgroundColor: 'black',
-        padding: 10,
-        borderRadius: 7,
-        height: 45,
-        marginLeft: 40,
-        marginRight: 40
+    container: {
+        flex: 1,
+        margin: 10
+    },
+    decksList: {
+        flex: 0.75
+    },
+    addDeck: {
+        flex: 0.25,
+        margin: 10,
+        backgroundColor: orange,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    deckItem: {
+        flex: 1,
+        height: 150,
+        backgroundColor: lightPurp,
+        margin: 10,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    deckTitle: {
+        color: white,
+        fontSize: 20
+    },
+    addDeckText: {
+        color: white,
+        fontSize: 40
     }
 })
 
