@@ -5,6 +5,8 @@ import { createStore } from 'redux'
 import reducer from './reducers'
 import Decks from './components/Decks';
 import middleware from './middleware'
+import Deck from './components/Deck';
+import Quiz from './components/Quiz';
 
 export default class App extends React.Component {
 
@@ -12,7 +14,7 @@ export default class App extends React.Component {
 
     return (
       <Provider store={createStore(reducer, middleware)}>
-        <Decks />
+        <Quiz quiz={{ question: 'Is that right?', answer: 'Who knows?' }} />
       </Provider>
     );
   }
