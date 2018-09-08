@@ -3,15 +3,16 @@ import { ScrollView, View, Text, TouchableOpacity, StyleSheet } from 'react-nati
 import { connect } from 'react-redux';
 import { handleInitialData, handleAddDeck } from '../actions';
 import { white, lightPurp, gray, orange } from '../utils/colors';
+import { createStackNavigator } from 'react-navigation'
 
 class Decks extends Component {
-    
+
     componentDidMount() {
         this.props.loadDummyDeck('DummyDeck')
     }
 
     render() {
-        const { decks } = this.props
+        const { decks, navigation } = this.props
 
         if (typeof decks === 'undefined')
             return <Text>No decks found</Text>
@@ -21,7 +22,7 @@ class Decks extends Component {
             <View style={styles.container}>
                 <ScrollView style={styles.decksList}>
                     {Object.values(decks).map(deck =>
-                        <TouchableOpacity key={deck.title} style={styles.deckItem}>
+                        <TouchableOpacity key={deck.title} style={styles.deckItem} onPress={() => navigation.navigate('Deck', { deck })}>
                             <Text style={styles.deckTitle}>{deck.title}</Text>
                         </TouchableOpacity>)}
                 </ScrollView>
@@ -31,7 +32,7 @@ class Decks extends Component {
                         borderBottomWidth: 1,
                     }}
                 />
-                <TouchableOpacity style={styles.addDeck}>
+                <TouchableOpacity style={styles.addDeck} onPress={() => navigation.navigate('NewDeck')}>
                     <Text style={styles.addDeckText}>Add Deck</Text>
                 </TouchableOpacity>
             </View>

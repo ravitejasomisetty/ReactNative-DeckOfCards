@@ -1,36 +1,53 @@
 import React from 'react'
 import { StyleSheet, View, Text, TextInput, KeyboardAvoidingView, TouchableOpacity } from 'react-native'
 import { white } from '../utils/colors';
+import { connect } from 'react-redux';
+import { handleAddDeck } from '../actions';
 
-export default function NewDeck() {
+class NewDeck extends React.Component {
+    state = { title: '' }
 
-    return (
-        <KeyboardAvoidingView behavior='padding' enabled style={styles.container}>
-            <View style={[styles.textsView, styles.center]}>
-                <Text style={styles.questionText}>What is the title of your new deck?</Text>
-            </View>
+    submitEdit() {
+        const { addNewDeck, navigation } = this.props
+        const { title } = this.state
 
-            <View style={styles.buttonsView}>
-                <TextInput
-                    placeholder='Deck Title'
-                    autoFocus={true}
-                    style={{
-                        height: 30,
-                        padding: 8,
-                        borderRadius: 5,
-                        borderWidth: 1,
-                        color: 'black'
-                    }}
-                />
-            </View>
+        if (title) {
+            addNewDeck(title)
+            navigation.navigate('Home')
+        }
+    }
 
-            <View style={[styles.center, { flex: 0.125, padding: 10, margin: 10 }]}>
-                <TouchableOpacity style={{ backgroundColor: 'black', borderWidth: 1, borderRadius: 5, padding: 10, margin: 10 }}>
-                    <Text style={{ color: white, fontSize: 20 }}>Submit</Text>
-                </TouchableOpacity>
-            </View>
-        </KeyboardAvoidingView>
-    )
+    render() {
+        return (
+            <KeyboardAvoidingView behavior='padding' enabled style={styles.container}>
+                <View style={[styles.textsView, styles.center]}>
+                    <Text style={styles.questionText}>What is the title of your new deck?</Text>
+                </View>
+
+                <View style={styles.buttonsView}>
+                    <TextInput
+                        placeholder='Deck Title'
+                        autoFocus={true}
+                        style={{
+                            height: 30,
+                            padding: 8,
+                            borderRadius: 5,
+                            borderWidth: 1,
+                            color: 'black'
+                        }}
+                        onChangeText={(title) => this.setState({ title })}
+                        value={this.state.title}
+                    />
+                </View>
+
+                <View style={[styles.center, { flex: 0.125, padding: 10, margin: 10 }]}>
+                    <TouchableOpacity style={styles.submitBtn} onPress={() => this.submitEdit()}>
+                        <Text style={{ color: white, fontSize: 20 }}>Submit</Text>
+                    </TouchableOpacity>
+                </View>
+            </KeyboardAvoidingView>
+        )
+    }
 }
 
 const styles = StyleSheet.create({
@@ -55,4 +72,19 @@ const styles = StyleSheet.create({
         alignItems: 'stretch',
         justifyContent: 'center'
     },
+    submitBtn: {
+        backgroundColor: 'black',
+        borderWidth: 1,
+        borderRadius: 5,
+        padding: 10,
+        margin: 10
+    }
 })
+
+function mapDispatchToProps(dispatch) {
+    return {
+        addNewDeck: (title) => dispatch(handleAddDeck(title))
+    }
+}
+
+export default connect(null, mapDispatchToProps)(NewDeck)

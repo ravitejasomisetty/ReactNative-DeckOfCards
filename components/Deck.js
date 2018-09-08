@@ -3,12 +3,12 @@ import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
 import { gray, white } from '../utils/colors';
 
 export default function Deck(props) {
-    const { deck } = props
+    const { deck } = props.navigation.state.params
 
     return (<View style={styles.container}>
         <View style={styles.textsView}>
             <Text style={styles.deckTitle}>{deck.title}</Text>
-            <Text style={styles.cardsCount}>{deck[deck.title].questions.length} cards</Text>
+            <Text style={styles.cardsCount}>{deck.questions.length} cards</Text>
         </View>
 
         <View style={styles.buttonsView}>
