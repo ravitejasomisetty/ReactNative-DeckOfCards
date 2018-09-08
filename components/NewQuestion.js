@@ -2,29 +2,26 @@ import React from 'react'
 import { StyleSheet, View, Text, TextInput, KeyboardAvoidingView, TouchableOpacity } from 'react-native'
 import { white } from '../utils/colors';
 
-export default function NewDeck() {
+export default function NewQuestion() {
 
     return (
         <KeyboardAvoidingView behavior='padding' enabled style={styles.container}>
-            <View style={[styles.textsView, styles.center]}>
-                <Text style={styles.questionText}>What is the title of your new deck?</Text>
-            </View>
-
-            <View style={styles.buttonsView}>
+            <View style={styles.textInputView}>
                 <TextInput
-                    placeholder='Deck Title'
+                    placeholder='Question'
                     autoFocus={true}
-                    style={{
-                        height: 30,
-                        padding: 8,
-                        borderRadius: 5,
-                        borderWidth: 1,
-                        color: 'black'
-                    }}
+                    style={styles.textInput}
                 />
             </View>
 
-            <View style={[styles.center, { flex: 0.125, padding: 10, margin: 10 }]}>
+            <View style={styles.textInputView}>
+                <TextInput
+                    placeholder='Answer'
+                    style={styles.textInput}
+                />
+            </View>
+
+            <View style={[styles.center, { flex: 0.25, padding: 10, margin: 10 }]}>
                 <TouchableOpacity style={{ backgroundColor: 'black', borderWidth: 1, borderRadius: 5, padding: 10, margin: 10 }}>
                     <Text style={{ color: white, fontSize: 20 }}>Submit</Text>
                 </TouchableOpacity>
@@ -39,20 +36,20 @@ const styles = StyleSheet.create({
         margin: 10,
         padding: 10
     },
-    questionText: {
-        color: 'black',
-        fontSize: 60
-    },
     center: {
         alignItems: 'center',
         justifyContent: 'center'
     },
-    textsView: {
-        flex: 0.75,
-    },
-    buttonsView: {
-        flex: 0.125,
+    textInputView: {
+        flex: 0.375,
         alignItems: 'stretch',
         justifyContent: 'center'
     },
+    textInput: {
+        height: 50,
+        padding: 8,
+        borderRadius: 5,
+        borderWidth: 1,
+        color: 'black'
+    }
 })

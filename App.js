@@ -8,6 +8,7 @@ import middleware from './middleware'
 import Deck from './components/Deck';
 import Quiz from './components/Quiz';
 import NewDeck from './components/NewDeck';
+import NewQuestion from './components/NewQuestion';
 
 export default class App extends React.Component {
 
@@ -15,7 +16,7 @@ export default class App extends React.Component {
 
     return (
       <Provider store={createStore(reducer, middleware)}>
-        <NewDeck />
+        <NewQuestion />
       </Provider>
     );
   }
