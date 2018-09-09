@@ -2,26 +2,73 @@ import React from 'react'
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
 import { gray, white, red, green } from '../utils/colors';
 
-export default function Quiz(props) {
-    const { quiz } = props
+export default class Quiz extends React.Component {
+    state = { index: 0, score: 0, showAnswer: false }
 
-    return (<View style={styles.container}>
-        <View style={[styles.textsView, styles.center]}>
-            <Text style={styles.questionText}>{quiz.question}</Text>
-            <TouchableOpacity>
-                <Text style={{ color: red, margin: 10, fontSize: 25, fontWeight: 'bold' }}>Answer</Text>
-            </TouchableOpacity>
-        </View>
+    submitCorrect = () => {
+        this.setState((prevState) => ({ ...prevState, index: prevState.index + 1, score: prevState.score + 1 }))
+    }
 
-        <View style={[styles.buttonsView, styles.center]}>
-            <TouchableOpacity style={[styles.correct, styles.center]}>
-                <Text style={{ color: white, fontSize: 20 }}>Correct</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={[styles.incorrect, styles.center]}>
-                <Text style={{ color: white, fontSize: 20 }}>Incorrect</Text>
-            </TouchableOpacity>
-        </View>
-    </View>)
+    submitIncorrect = () => {
+        this.setState((prevState) => ({ ...prevState, index: prevState.index + 1 }))
+    }
+
+    flipCard = () => {
+        this.setState((prevState) => ({ ...prevState, showAnswer: !prevState.showAnswer }))
+    }
+
+    reset = () => {
+        this.setState({ index: 0, score: 0, showAnswer: false })
+    }
+
+    render() {
+        const { deck } = this.props.navigation.state.params
+        const { index, score, showAnswer } = this.state
+        const currentScore = `${score} / ${deck.questions.length}`
+
+        if (index >= deck.questions.length) {
+            return (
+                <View style={styles.container}>
+                    <View style={[styles.textsView, styles.center]}>
+                        <Text style={{ fontSize: 25, fontWeight: 'bold', color: red }}>Well done!</Text>
+                        <Text style={{ fontSize: 15, color: gray }}>{`Your final score: ${currentScore}`}</Text>
+                    </View>
+                    <View style={[styles.buttonsView, styles.center]}>
+                        <TouchableOpacity style={styles.reTakeQuizBtn} onPress={() => this.reset()}>
+                            <Text style={{ color: white, fontSize: 20 }}>Retake Quiz</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            )
+        }
+
+        const quiz = deck.questions[index]
+
+        return (<View style={styles.container}>
+            <View style={{ flex: 0.05 }}>
+                <Text style={{ alignSelf: 'flex-start', color: 'black', fontSize: 15, marginBottom: 'auto' }}>
+                    {`${currentScore}`}
+                </Text>
+            </View>
+            <View style={[styles.textsView, styles.center]}>
+                <Text style={styles.questionText}>{showAnswer ? quiz.answer : quiz.question}</Text>
+                <TouchableOpacity onPress={() => this.flipCard()}>
+                    <Text style={{ color: red, margin: 10, fontSize: 25, fontWeight: 'bold' }}>
+                        {showAnswer ? 'Question' : 'Answer'}
+                    </Text>
+                </TouchableOpacity>
+            </View>
+
+            <View style={[styles.buttonsView, styles.center]}>
+                <TouchableOpacity style={[styles.correct, styles.center]} onPress={() => this.submitCorrect()}>
+                    <Text style={{ color: white, fontSize: 20 }}>Correct</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={[styles.incorrect, styles.center]} onPress={() => this.submitIncorrect()}>
+                    <Text style={{ color: white, fontSize: 20 }}>Incorrect</Text>
+                </TouchableOpacity>
+            </View>
+        </View>)
+    }
 }
 
 const styles = StyleSheet.create({
@@ -30,7 +77,7 @@ const styles = StyleSheet.create({
         margin: 10
     },
     textsView: {
-        flex: 0.75,
+        flex: 0.70,
     },
     buttonsView: {
         flex: 0.25,
@@ -53,6 +100,13 @@ const styles = StyleSheet.create({
     correct: {
         backgroundColor: green,
         width: 150,
+        borderWidth: 1,
+        borderRadius: 5,
+        padding: 10,
+        margin: 10
+    },
+    reTakeQuizBtn: {
+        backgroundColor: 'black',
         borderWidth: 1,
         borderRadius: 5,
         padding: 10,

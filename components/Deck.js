@@ -16,7 +16,7 @@ function Deck(props) {
             <TouchableOpacity style={styles.addCard} onPress={() => navigation.navigate('NewQuestion', { title })}>
                 <Text style={{ color: 'black', fontSize: 20 }}>Add Card</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.startQuiz}>
+            <TouchableOpacity style={styles.startQuiz} onPress={() => navigation.navigate('Quiz', { deck })}>
                 <Text style={{ color: white, fontSize: 20 }}>Start Quiz</Text>
             </TouchableOpacity>
         </View>

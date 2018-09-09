@@ -10,6 +10,7 @@ import { purple, white } from './utils/colors';
 import Deck from './components/Deck';
 import NewDeck from './components/NewDeck';
 import NewQuestion from './components/NewQuestion';
+import Quiz from './components/Quiz';
 
 export default class App extends React.Component {
 
@@ -65,5 +66,8 @@ const MainNavigator = createStackNavigator({
   },
   NewQuestion: {
     screen: NewQuestion
+  },
+  Quiz: {
+    screen: Quiz
   }
 })
