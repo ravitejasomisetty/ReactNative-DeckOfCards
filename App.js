@@ -1,5 +1,4 @@
 import React from 'react';
-import { View } from 'react-native';
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
 import reducer from './reducers'
@@ -11,6 +10,17 @@ import Deck from './components/Deck';
 import NewDeck from './components/NewDeck';
 import NewQuestion from './components/NewQuestion';
 import Quiz from './components/Quiz';
+import { StatusBar, View } from 'react-native'
+import { Constants } from 'expo'
+import { MaterialCommunityIcons, Entypo } from '@expo/vector-icons'
+
+function CustomStatusBar({ backgroundColor, ...props }) {
+  return (
+    <View style={{ backgroundColor, height: Constants.statusBarHeight }} >
+      <StatusBar translucent backgroundColor={backgroundColor} {...props} />
+    </View>
+  )
+}
 
 export default class App extends React.Component {
 
@@ -18,7 +28,10 @@ export default class App extends React.Component {
 
     return (
       <Provider store={createStore(reducer, middleware)}>
-        <MainNavigator />
+        <View style={{ flex: 1 }}>
+          <CustomStatusBar backgroundColor={purple} barStyle='light-content' />
+          <MainNavigator />
+        </View>
       </Provider>
     );
   }
@@ -29,17 +42,21 @@ const TabNavigator = createBottomTabNavigator({
   Decks: {
     screen: Decks,
     navigationOptions: {
-      title: 'DECKS'
+      tabBarLabel: 'Decks',
+      tabBarIcon: ({ tintColor }) => <MaterialCommunityIcons name='cards' size={30} color={tintColor} />
+    }
+  },
+  NewDeck: {
+    screen: NewDeck,
+    navigationOptions: {
+      tabBarLabel: 'New Deck',
+      tabBarIcon: ({ tintColor }) => <Entypo name='new-message' size={30} color={tintColor} />
     }
   }
 }, {
     tabBarOptions: {
       activeTintColor: purple,
-      labelStyle: {
-        fontSize: 25,
-      },
       style: {
-        padding: 10,
         height: 56,
         backgroundColor: white,
         shadowColor: 'rgba(0,0,0,0.24)',
@@ -56,18 +73,37 @@ const TabNavigator = createBottomTabNavigator({
 
 const MainNavigator = createStackNavigator({
   Home: {
-    screen: TabNavigator
+    screen: TabNavigator,
+    navigationOptions: {
+      headerTitle: 'My flash cards',
+
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: purple
+      }
+    }
   },
   Deck: {
     screen: Deck
   },
-  NewDeck: {
-    screen: NewDeck
-  },
   NewQuestion: {
-    screen: NewQuestion
+    screen: NewQuestion,
+    navigationOptions: {
+      headerTitle: 'Add Card',
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: purple
+      }
+    }
   },
   Quiz: {
-    screen: Quiz
+    screen: Quiz,
+    navigationOptions: {
+      headerTitle: 'Quiz',
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: purple
+      }
+    }
   }
 })

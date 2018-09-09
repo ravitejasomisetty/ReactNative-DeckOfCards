@@ -1,26 +1,38 @@
 import React from 'react'
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
-import { gray, white } from '../utils/colors';
+import { gray, white, purple } from '../utils/colors';
 import { connect } from 'react-redux';
 
-function Deck(props) {
-    const { title, deck, navigation } = props
+class Deck extends React.Component {
+    static navigationOptions = ({ navigation }) => {
+        return {
+            title: navigation.state.params.title,
+            headerTintColor: white,
+            headerStyle: {
+                backgroundColor: purple
+            }
+        };
+    };
 
-    return (<View style={styles.container}>
-        <View style={styles.textsView}>
-            <Text style={styles.deckTitle}>{deck.title}</Text>
-            <Text style={styles.cardsCount}>{deck.questions.length} cards</Text>
-        </View>
+    render() {
+        const { title, deck, navigation } = this.props
 
-        <View style={styles.buttonsView}>
-            <TouchableOpacity style={styles.addCard} onPress={() => navigation.navigate('NewQuestion', { title })}>
-                <Text style={{ color: 'black', fontSize: 20 }}>Add Card</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.startQuiz} onPress={() => navigation.navigate('Quiz', { deck })}>
-                <Text style={{ color: white, fontSize: 20 }}>Start Quiz</Text>
-            </TouchableOpacity>
-        </View>
-    </View>)
+        return (<View style={styles.container}>
+            <View style={styles.textsView}>
+                <Text style={styles.deckTitle}>{deck.title}</Text>
+                <Text style={styles.cardsCount}>{deck.questions.length} cards</Text>
+            </View>
+
+            <View style={styles.buttonsView}>
+                <TouchableOpacity style={styles.addCard} onPress={() => navigation.navigate('NewQuestion', { title })}>
+                    <Text style={{ color: 'black', fontSize: 20 }}>Add Card</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.startQuiz} onPress={() => navigation.navigate('Quiz', { deck })}>
+                    <Text style={{ color: white, fontSize: 20 }}>Start Quiz</Text>
+                </TouchableOpacity>
+            </View>
+        </View>)
+    }
 }
 
 const styles = StyleSheet.create({

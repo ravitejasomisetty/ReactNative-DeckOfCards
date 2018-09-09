@@ -52,9 +52,7 @@ class NewQuestion extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        margin: 10,
-        padding: 10
+        flex: 1
     },
     center: {
         alignItems: 'center',
@@ -62,6 +60,7 @@ const styles = StyleSheet.create({
     },
     textInputView: {
         flex: 0.375,
+        margin:10,
         alignItems: 'stretch',
         justifyContent: 'center'
     },

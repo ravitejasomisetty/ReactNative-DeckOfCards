@@ -13,6 +13,7 @@ class NewDeck extends React.Component {
 
         if (title) {
             addNewDeck(title)
+            this.setState({ title: '' })
             navigation.goBack()
         }
     }
@@ -22,25 +23,17 @@ class NewDeck extends React.Component {
             <KeyboardAvoidingView behavior='padding' enabled style={styles.container}>
                 <View style={[styles.textsView, styles.center]}>
                     <Text style={styles.questionText}>What is the title of your new deck?</Text>
-                </View>
 
-                <View style={styles.buttonsView}>
                     <TextInput
                         placeholder='Deck Title'
                         autoFocus={true}
-                        style={{
-                            height: 30,
-                            padding: 8,
-                            borderRadius: 5,
-                            borderWidth: 1,
-                            color: 'black'
-                        }}
+                        style={styles.textInputView}
                         onChangeText={(title) => this.setState({ title })}
                         value={this.state.title}
                     />
                 </View>
 
-                <View style={[styles.center, { flex: 0.125, padding: 10, margin: 10 }]}>
+                <View style={[styles.center, { flex: 0.25, padding: 10, margin: 10 }]}>
                     <TouchableOpacity style={styles.submitBtn} onPress={() => this.submitEdit()}>
                         <Text style={{ color: white, fontSize: 20 }}>Submit</Text>
                     </TouchableOpacity>
@@ -58,7 +51,7 @@ const styles = StyleSheet.create({
     },
     questionText: {
         color: 'black',
-        fontSize: 60
+        fontSize: 35
     },
     center: {
         alignItems: 'center',
@@ -66,11 +59,16 @@ const styles = StyleSheet.create({
     },
     textsView: {
         flex: 0.75,
+        padding: 20
     },
-    buttonsView: {
-        flex: 0.125,
-        alignItems: 'stretch',
-        justifyContent: 'center'
+    textInputView: {
+        margin: 20,
+        height: 40,
+        padding: 8,
+        borderRadius: 5,
+        borderWidth: 1,
+        color: 'black',
+        alignSelf: 'stretch'
     },
     submitBtn: {
         backgroundColor: 'black',
