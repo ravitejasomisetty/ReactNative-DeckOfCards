@@ -1,6 +1,7 @@
 import React from 'react'
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
 import { gray, white, red, green } from '../utils/colors';
+import { clearLocalNotification, setLocalNotification } from '../utils/helper';
 
 export default class Quiz extends React.Component {
     state = { index: 0, score: 0, showAnswer: false }
@@ -27,6 +28,9 @@ export default class Quiz extends React.Component {
         const currentScore = `${score} / ${deck.questions.length}`
 
         if (index >= deck.questions.length) {
+            clearLocalNotification()
+            setLocalNotification()
+            
             return (
                 <View style={styles.container}>
                     <View style={[styles.textsView, styles.center]}>

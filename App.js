@@ -13,6 +13,7 @@ import Quiz from './components/Quiz';
 import { StatusBar, View } from 'react-native'
 import { Constants } from 'expo'
 import { MaterialCommunityIcons, Entypo } from '@expo/vector-icons'
+import { setLocalNotification } from './utils/helper';
 
 function CustomStatusBar({ backgroundColor, ...props }) {
   return (
@@ -23,6 +24,9 @@ function CustomStatusBar({ backgroundColor, ...props }) {
 }
 
 export default class App extends React.Component {
+  componentDidMount(){
+    setLocalNotification()
+  }
 
   render() {
 
