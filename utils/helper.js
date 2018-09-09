@@ -25,7 +25,7 @@ export function saveDeckTitle(title, callback) {
 }
 
 export function addCardToDeck(title, card, callback) {
-    return getDecks((decks) => {
+    return getDecks((err, decks) => {
         const decksJson = JSON.parse(decks)
         decksJson[title].questions.push(card)
         AsyncStorage.setItem(CARDS_STORAGE_KEY, JSON.stringify(decksJson), callback)

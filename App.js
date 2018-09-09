@@ -9,6 +9,7 @@ import { createBottomTabNavigator, createStackNavigator } from 'react-navigation
 import { purple, white } from './utils/colors';
 import Deck from './components/Deck';
 import NewDeck from './components/NewDeck';
+import NewQuestion from './components/NewQuestion';
 
 export default class App extends React.Component {
 
@@ -59,7 +60,10 @@ const MainNavigator = createStackNavigator({
   Deck: {
     screen: Deck
   },
-  NewDeck:{
+  NewDeck: {
     screen: NewDeck
+  },
+  NewQuestion: {
+    screen: NewQuestion
   }
 })

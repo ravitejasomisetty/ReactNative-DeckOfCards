@@ -22,7 +22,8 @@ class Decks extends Component {
             <View style={styles.container}>
                 <ScrollView style={styles.decksList}>
                     {Object.values(decks).map(deck =>
-                        <TouchableOpacity key={deck.title} style={styles.deckItem} onPress={() => navigation.navigate('Deck', { deck })}>
+                        <TouchableOpacity key={deck.title} style={styles.deckItem}
+                            onPress={() => navigation.navigate('Deck', { title: deck.title })}>
                             <Text style={styles.deckTitle}>{deck.title}</Text>
                         </TouchableOpacity>)}
                 </ScrollView>

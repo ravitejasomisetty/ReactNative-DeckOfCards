@@ -18,6 +18,6 @@ export function handleAddDeck(title) {
     return (dispatch) => saveDeckTitle(title, () => dispatch(handleInitialData()))
 }
 
-export function handleAddCard(card) {
+export function handleAddCard(title, card) {
     return (dispatch) => addCardToDeck(title, card, () => dispatch(handleInitialData()))
 }

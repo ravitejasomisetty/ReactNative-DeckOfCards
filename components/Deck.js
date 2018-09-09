@@ -1,9 +1,10 @@
 import React from 'react'
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
 import { gray, white } from '../utils/colors';
+import { connect } from 'react-redux';
 
-export default function Deck(props) {
-    const { deck } = props.navigation.state.params
+function Deck(props) {
+    const { title, deck, navigation } = props
 
     return (<View style={styles.container}>
         <View style={styles.textsView}>
@@ -12,10 +13,10 @@ export default function Deck(props) {
         </View>
 
         <View style={styles.buttonsView}>
-            <TouchableOpacity style={{ backgroundColor: white, borderWidth: 1, borderRadius: 5, padding: 10, margin:10 }}>
+            <TouchableOpacity style={styles.addCard} onPress={() => navigation.navigate('NewQuestion', { title })}>
                 <Text style={{ color: 'black', fontSize: 20 }}>Add Card</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={{ backgroundColor: 'black', borderRadius: 5, padding: 10, margin:10 }}>
+            <TouchableOpacity style={styles.startQuiz}>
                 <Text style={{ color: white, fontSize: 20 }}>Start Quiz</Text>
             </TouchableOpacity>
         </View>
@@ -44,5 +45,30 @@ const styles = StyleSheet.create({
     cardsCount: {
         color: gray,
         fontSize: 20
+    },
+    addCard: {
+        backgroundColor: white,
+        borderWidth: 1,
+        borderRadius: 5,
+        padding: 10,
+        margin: 10
+    },
+    startQuiz: {
+        backgroundColor: 'black',
+        borderRadius: 5,
+        padding: 10,
+        margin: 10
     }
 })
+
+function mapStateToProps({ decks }, { navigation }) {
+    const { title } = navigation.state.params
+
+    return {
+        title,
+        deck: decks[title],
+        navigation
+    }
+}
+
+export default connect(mapStateToProps)(Deck)

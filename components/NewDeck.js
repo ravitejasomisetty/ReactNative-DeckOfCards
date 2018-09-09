@@ -13,7 +13,7 @@ class NewDeck extends React.Component {
 
         if (title) {
             addNewDeck(title)
-            navigation.navigate('Home')
+            navigation.goBack()
         }
     }
 
