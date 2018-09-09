@@ -7,6 +7,7 @@ import { white, lightPurp, orange } from '../utils/colors';
 class Decks extends Component {
 
     componentDidMount() {
+        this.props.loadDecks()
     }
 
     render() {
@@ -33,8 +34,7 @@ class Decks extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-        loadDecks: () => dispatch(handleInitialData()),
-        loadDummyDeck: (title) => dispatch(handleAddDeck(title))
+        loadDecks: () => dispatch(handleInitialData())
     }
 }
 

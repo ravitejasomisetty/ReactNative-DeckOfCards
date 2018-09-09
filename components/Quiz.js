@@ -25,17 +25,16 @@ export default class Quiz extends React.Component {
     render() {
         const { deck } = this.props.navigation.state.params
         const { index, score, showAnswer } = this.state
-        const currentScore = `${score} / ${deck.questions.length}`
 
         if (index >= deck.questions.length) {
             clearLocalNotification()
             setLocalNotification()
-            
+
             return (
                 <View style={styles.container}>
                     <View style={[styles.textsView, styles.center]}>
                         <Text style={{ fontSize: 25, fontWeight: 'bold', color: red }}>Well done!</Text>
-                        <Text style={{ fontSize: 15, color: gray }}>{`Your final score: ${currentScore}`}</Text>
+                        <Text style={{ fontSize: 15, color: gray }}>{`Your final score: ${score} / ${deck.questions.length}`}</Text>
                     </View>
                     <View style={[styles.buttonsView, styles.center]}>
                         <TouchableOpacity style={styles.reTakeQuizBtn} onPress={() => this.reset()}>
@@ -51,7 +50,7 @@ export default class Quiz extends React.Component {
         return (<View style={styles.container}>
             <View style={{ flex: 0.05 }}>
                 <Text style={{ alignSelf: 'flex-start', color: 'black', fontSize: 15, marginBottom: 'auto' }}>
-                    {`${currentScore}`}
+                    {`${index + 1}/${deck.questions.length}`}
                 </Text>
             </View>
             <View style={[styles.textsView, styles.center]}>
